@@ -2,9 +2,20 @@
 
 import UIKit
 
-var teamDragons = []
-var teamSharks = []
-var teamRaptors = []
+// Creating each team array to contain the player dictionary object
+var teamDragons: [Dictionary<String, NSObject>] = []
+var teamSharks: [Dictionary<String, NSObject>] = []
+var teamRaptors: [Dictionary<String, NSObject>] = []
+
+// Hold the average hights to keep them even
+var dragonsHeightAverage = 0.0
+var sharksHeightAverage = 0.0
+var raptorsHeightAverage = 0.0
+
+
+// This is the max number of experianced players per team and the max number of players per team
+let experiancePlayerMaxCount = 3
+let playerMaxCount = 6
 
 
 // Create each player and add in the information to the dictionary
@@ -50,5 +61,113 @@ let players = [joeSmith,
                phillipHelm,
                lesClay,
                herschelKrustofski]
+
+// Create functions for processing players and writing the letters
+
+func experiancedPlayers(list: NSArray) {
+    
+    for player in players {
+        if player["experiance"] == true {
+            if teamDragons.count < experiancePlayerMaxCount {
+                teamDragons.append(player)
+                
+                            if let height = player["height"] {
+                                dragonsHeightAverage += (height as? Double)!
+                            }
+            } else if teamSharks.count < experiancePlayerMaxCount {
+                teamSharks.append(player)
+                
+                            if let height = player["height"] {
+                                sharksHeightAverage += (height as? Double)!
+                            }
+                
+            } else if teamRaptors.count < experiancePlayerMaxCount {
+                teamRaptors.append(player)
+                
+                            if let height = player["height"] {
+                                raptorsHeightAverage += (height as? Double)!
+                            }
+            }
+            
+            //        if let height = player["height"] {
+            //            dragonsHeightAverage += (height as? Int)!
+            //        }
+        }
+    }
+}
+
+
+func newPlayers(list: NSArray) {
+    
+    for player in players {
+        if player["experiance"] == false {
+            
+            if teamDragons.count < playerMaxCount {
+                
+                teamDragons.append(player)
+                player
+                
+                if let height = player["height"] {
+                    dragonsHeightAverage += (height as? Double)!
+                }
+                
+            } else if teamSharks.count < playerMaxCount {
+                teamSharks.append(player)
+                
+                if let height = player["height"] {
+                    sharksHeightAverage += (height as? Double)!
+                }
+                
+            } else if teamRaptors.count < playerMaxCount {
+                teamRaptors.append(player)
+                
+                if let height = player["height"] {
+                    raptorsHeightAverage += (height as? Double)!
+                }
+                
+            }
+            
+        }
+    }
+}
+
+
+
+experiancedPlayers(players)
+newPlayers(players)
+
+
+
+// Verify the number of people per team
+teamDragons.count
+teamSharks.count
+teamRaptors.count
+
+
+for player in teamDragons {
+    player["name"]
+}
+
+for player in teamSharks {
+    player["name"]
+}
+
+for player in teamRaptors {
+    player["name"]
+}
+
+
+
+
+
+dragonsHeightAverage = dragonsHeightAverage / Double(teamDragons.count)
+sharksHeightAverage = sharksHeightAverage / Double(teamSharks.count)
+raptorsHeightAverage = raptorsHeightAverage / Double(teamRaptors.count)
+
+for player in teamDragons {
+    if let name = player["name"] {
+        print("Hello \(name) and welcome to the team")
+    }
+}
 
 
