@@ -109,11 +109,9 @@ func welcomeLetter(teamPlayers: [Dictionary<String, NSObject>], teamName: String
 
 
 // Add in the experianced players to each team
-//experiancedPlayers(players)
 addPlayersToTeams(players, experianced: true)
 
 // Add in the new players to each team
-//newPlayers(players)
 addPlayersToTeams(players, experianced: false)
 
 
