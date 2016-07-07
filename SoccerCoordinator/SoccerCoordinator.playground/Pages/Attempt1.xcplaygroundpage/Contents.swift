@@ -6,6 +6,7 @@ import UIKit
 var teamDragons: [Dictionary<String, NSObject>] = []
 var teamSharks: [Dictionary<String, NSObject>] = []
 var teamRaptors: [Dictionary<String, NSObject>] = []
+let startDates = ["Dragons": "March 17, 1pm", "Sharks": "March 17, 3pm", "Raptors": "March 18, 1pm"]
 
 // Hold the average hights to keep them even
 var dragonsHeightAverage = 0.0
@@ -14,6 +15,7 @@ var raptorsHeightAverage = 0.0
 
 
 // This is the max number of experianced players per team and the max number of players per team
+// TODO: Update this so it's not using hard coded numbers.
 let experiancePlayerMaxCount = 3
 let playerMaxCount = 6
 
@@ -132,8 +134,18 @@ func newPlayers(list: NSArray) {
 }
 
 
+func welcomeLetter(teamPlayers: [Dictionary<String, NSObject>], teamName: String) {
+    
+    for player in teamPlayers {
+        print("Hello \(player["guardian"]!), we would like to welcome \(player["name"]!) to our team the \(teamName). Our first practice will be on \(startDates[teamName]!) so please be ready. We are excited for a great season! Thank you.")
+    }
+}
 
+
+// Add in the experianced players to each team
 experiancedPlayers(players)
+
+// Add in the new players to each team
 newPlayers(players)
 
 
@@ -143,18 +155,10 @@ teamDragons.count
 teamSharks.count
 teamRaptors.count
 
-
-for player in teamDragons {
-    player["name"]
-}
-
-for player in teamSharks {
-    player["name"]
-}
-
-for player in teamRaptors {
-    player["name"]
-}
+// Send out the welcome letters
+welcomeLetter(teamDragons, teamName: "Dragons")
+welcomeLetter(teamSharks, teamName: "Sharks")
+welcomeLetter(teamRaptors, teamName: "Raptors")
 
 
 
@@ -164,10 +168,10 @@ dragonsHeightAverage = dragonsHeightAverage / Double(teamDragons.count)
 sharksHeightAverage = sharksHeightAverage / Double(teamSharks.count)
 raptorsHeightAverage = raptorsHeightAverage / Double(teamRaptors.count)
 
-for player in teamDragons {
-    if let name = player["name"] {
-        print("Hello \(name) and welcome to the team")
-    }
-}
+//for player in teamDragons {
+//    if let name = player["name"] {
+//        print("Hello \(name) and welcome to the team")
+//    }
+//}
 
 
