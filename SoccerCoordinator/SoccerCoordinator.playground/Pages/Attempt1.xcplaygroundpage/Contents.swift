@@ -9,6 +9,7 @@ var teamRaptors: [Dictionary<String, NSObject>] = []
 let startDates = ["Dragons": "March 17, 1pm", "Sharks": "March 17, 3pm", "Raptors": "March 18, 1pm"]
 
 // Hold the average hights to keep them even
+// TODO: Add in feature to keep the teams average height close. ~1.5' from the other teams.
 var dragonsHeightAverage = 0.0
 var sharksHeightAverage = 0.0
 var raptorsHeightAverage = 0.0
@@ -22,6 +23,8 @@ let playerMaxCount = 6
 
 // Create each player and add in the information to the dictionary
 // A player class could be created to make sure all this information is standardized and added in approperiatly
+// Accessing class properties would be a much easier solution then trying to access the different parts of the dictionary
+// Just saying
 
 let joeSmith = ["name": "Joe Smith", "height": 42, "experiance": true, "guardian": "Jim and Jan Smith"]
 let jillTanner = ["name": "Jill Tanner", "height": 36, "experiance": true, "guardian": "Clara Tanner"]
@@ -66,75 +69,35 @@ let players = [joeSmith,
 
 // Create functions for processing players and writing the letters
 
-func experiancedPlayers(list: NSArray) {
+func addPlayersToTeams(list: NSArray, experianced: Bool) {
     
     for player in players {
-        if player["experiance"] == true {
+    
+        if experianced == true && player["experiance"] == true {
             if teamDragons.count < experiancePlayerMaxCount {
                 teamDragons.append(player)
-                
-                            if let height = player["height"] {
-                                dragonsHeightAverage += (height as? Double)!
-                            }
             } else if teamSharks.count < experiancePlayerMaxCount {
                 teamSharks.append(player)
-                
-                            if let height = player["height"] {
-                                sharksHeightAverage += (height as? Double)!
-                            }
-                
             } else if teamRaptors.count < experiancePlayerMaxCount {
                 teamRaptors.append(player)
-                
-                            if let height = player["height"] {
-                                raptorsHeightAverage += (height as? Double)!
-                            }
             }
-            
-            //        if let height = player["height"] {
-            //            dragonsHeightAverage += (height as? Int)!
-            //        }
-        }
-    }
-}
-
-
-func newPlayers(list: NSArray) {
-    
-    for player in players {
-        if player["experiance"] == false {
-            
+        } else if experianced == false && player["experiance"] == false {
             if teamDragons.count < playerMaxCount {
-                
                 teamDragons.append(player)
-                player
-                
-                if let height = player["height"] {
-                    dragonsHeightAverage += (height as? Double)!
-                }
-                
             } else if teamSharks.count < playerMaxCount {
                 teamSharks.append(player)
-                
-                if let height = player["height"] {
-                    sharksHeightAverage += (height as? Double)!
-                }
-                
             } else if teamRaptors.count < playerMaxCount {
                 teamRaptors.append(player)
-                
-                if let height = player["height"] {
-                    raptorsHeightAverage += (height as? Double)!
-                }
-                
             }
-            
         }
     }
 }
 
 
 func welcomeLetter(teamPlayers: [Dictionary<String, NSObject>], teamName: String) {
+    
+    /* This block of code should allow for the optionals to be unwrapped with either an if let or guard statement. 
+    I force unwrapped these to remove the optional() dialog in the strings. This could be done safer with proper unwrapping */
     
     for player in teamPlayers {
         print("Hello \(player["guardian"]!), we would like to welcome \(player["name"]!) to our team the \(teamName). Our first practice will be on \(startDates[teamName]!) so please be ready. We are excited for a great season! Thank you.")
@@ -143,10 +106,12 @@ func welcomeLetter(teamPlayers: [Dictionary<String, NSObject>], teamName: String
 
 
 // Add in the experianced players to each team
-experiancedPlayers(players)
+//experiancedPlayers(players)
+addPlayersToTeams(players, experianced: true)
 
 // Add in the new players to each team
-newPlayers(players)
+//newPlayers(players)
+addPlayersToTeams(players, experianced: false)
 
 
 
@@ -163,15 +128,11 @@ welcomeLetter(teamRaptors, teamName: "Raptors")
 
 
 
-
+// Working on adding in the average height options. Work in progress
 dragonsHeightAverage = dragonsHeightAverage / Double(teamDragons.count)
 sharksHeightAverage = sharksHeightAverage / Double(teamSharks.count)
 raptorsHeightAverage = raptorsHeightAverage / Double(teamRaptors.count)
 
-//for player in teamDragons {
-//    if let name = player["name"] {
-//        print("Hello \(name) and welcome to the team")
-//    }
-//}
+
 
 

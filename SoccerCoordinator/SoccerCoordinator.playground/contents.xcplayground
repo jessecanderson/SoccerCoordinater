@@ -1,8 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='ios'>
-    <pages>
-        <page name='Attempt2'/>
-        <page name='Attempt1'/>
-        <page name='Attempt3'/>
-    </pages>
-</playground>
+<playground version='6.0' target-platform='ios'/>
