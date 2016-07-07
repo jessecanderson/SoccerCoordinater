@@ -2,6 +2,15 @@
 
 import Foundation
 
+// Enum to hold the different teams
+
+enum Teams {
+    case Dragons
+    case Sharks
+    case Raptors
+    case Unassigned
+}
+
 // Create custom player class to hold the player information
 
 class player {
@@ -10,7 +19,7 @@ class player {
     let height: Double
     let experiance: Bool
     let guardian: String
-    var teamName: String = "Unassigned"
+    var teamName: Teams = .Unassigned
     
     init (name: String, height: Double, experiance: Bool, guardian: String) {
     
@@ -20,8 +29,6 @@ class player {
         self.guardian = guardian
     
     }
-    
-    
 }
 
 
@@ -31,8 +38,9 @@ var teamSharks: [player] = []
 var teamRaptors: [player] = []
 var experiancedPlayers: [player] = []
 let listOfTeams = [teamDragons, teamSharks, teamRaptors]
-let startDates = ["Dragons": "March 17, 1pm", "Sharks": "March 17, 3pm", "Raptors": "March 18, 1pm"]
+let startDates: [Teams: String] = [.Dragons: "March 17, 1pm", .Sharks: "March 17, 3pm", .Raptors: "March 18, 1pm"]
 
+// TODO: Setup so each team is at least 1.5 inches close in height avarages
 // Hold the average hights to keep them even
 var dragonsHeightAverage = 0.0
 var sharksHeightAverage = 0.0
@@ -92,7 +100,56 @@ func seperateExperiancedPlayers(players: [player]) {
 }
 
 
+//func assignTeams(players: [player], experianced: Bool) {
+//    
+//    var maxNumberExperiancePlayersPerTeam = 0
+//    
+//    for player in players {
+//        if player.experiance == experianced {
+//            maxNumberExperiancePlayersPerTeam += 1
+//        }
+//    }
+//    
+//    maxNumberExperiancePlayersPerTeam = maxNumberExperiancePlayersPerTeam / listOfTeams.count
+//    
+//    // let maxNumberExperiancePlayersPerTeam = experiancedPlayers.count / listOfTeams.count
+//    
+//    for player in players {
+//        
+//        if player.experiance == experianced {
+//            
+//            if teamDragons.count < maxNumberExperiancePlayersPerTeam {
+//                player.teamName = .Dragons
+//                teamDragons.append(player)
+//            } else if teamSharks.count < maxNumberExperiancePlayersPerTeam {
+//                player.teamName = .Sharks
+//                teamSharks.append(player)
+//            } else if teamRaptors.count < maxNumberExperiancePlayersPerTeam {
+//                player.teamName = .Raptors
+//                teamRaptors.append(player)
+//            }
+//            
+//        }
+//    }
+//}
+
+// First seperate and assign the players who have experiance
+
 func assignExpTeams(players: [player]) {
+    
+//    var maxNumberExperiancePlayersPerTeam: Int {
+//        var temp = 0
+//        for player in players {
+//            if player.experiance == true {
+//                temp += 1
+//            }
+//        }
+//        
+//        temp = temp / listOfTeams.count
+//        
+//        return temp
+//    }
+    
     
     var maxNumberExperiancePlayersPerTeam = 0
     
@@ -104,20 +161,19 @@ func assignExpTeams(players: [player]) {
     
     maxNumberExperiancePlayersPerTeam = maxNumberExperiancePlayersPerTeam / listOfTeams.count
     
-    // let maxNumberExperiancePlayersPerTeam = experiancedPlayers.count / listOfTeams.count
     
     for player in players {
         
         if player.experiance == true {
         
             if teamDragons.count < maxNumberExperiancePlayersPerTeam {
-                player.teamName = "Dragons"
+                player.teamName = .Dragons
                 teamDragons.append(player)
             } else if teamSharks.count < maxNumberExperiancePlayersPerTeam {
-                player.teamName = "Sharks"
+                player.teamName = .Sharks
                 teamSharks.append(player)
             } else if teamRaptors.count < maxNumberExperiancePlayersPerTeam {
-                player.teamName = "Raptors"
+                player.teamName = .Raptors
                 teamRaptors.append(player)
             }
             
@@ -146,13 +202,13 @@ func assignNewTeams(players: [player]) {
         if player.experiance == false {
             
             if teamDragons.count < maxNumberNewPlayers {
-                player.teamName = "Dragons"
+                player.teamName = .Dragons
                 teamDragons.append(player)
             } else if teamSharks.count < maxNumberNewPlayers {
-                player.teamName = "Sharks"
+                player.teamName = .Sharks
                 teamSharks.append(player)
             } else if teamRaptors.count < maxNumberNewPlayers {
-                player.teamName = "Raptors"
+                player.teamName = .Raptors
                 teamRaptors.append(player)
             }
         }
@@ -164,11 +220,19 @@ func letterToParents(teamMembers: [player]) {
     
     
     for teamMember in teamMembers {
-        print("Dear \(teamMember.guardian), We want to welcome \(teamMember.name) to our team the \(teamMember.teamName). Our first practice is on \(startDates[teamMember.teamName]!) so please be ready to participate. Much appriciated, your coches")
+        
+        if let startDate = startDates[teamMember.teamName] {
+            print("Dear \(teamMember.guardian), We want to welcome \(teamMember.name) to our team the \(teamMember.teamName). Our first practice is on \(startDate) so please be ready to participate. Much appriciated, your coches")
+        } else {
+            print("I'm sorry, we don't have a start date just yet")
+        }
     }
 }
 
-
+//assignTeams(players, experianced: true)
+//assignTeams(players, experianced: false)
+//
+//
 assignExpTeams(players)
 assignNewTeams(players)
 letterToParents(players)
