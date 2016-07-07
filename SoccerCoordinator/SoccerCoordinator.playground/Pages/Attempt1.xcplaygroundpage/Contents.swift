@@ -6,6 +6,7 @@ import UIKit
 var teamDragons: [Dictionary<String, NSObject>] = []
 var teamSharks: [Dictionary<String, NSObject>] = []
 var teamRaptors: [Dictionary<String, NSObject>] = []
+let totalTeams = [teamDragons, teamSharks, teamRaptors]
 let startDates = ["Dragons": "March 17, 1pm", "Sharks": "March 17, 3pm", "Raptors": "March 18, 1pm"]
 
 // Hold the average hights to keep them even
@@ -13,12 +14,6 @@ let startDates = ["Dragons": "March 17, 1pm", "Sharks": "March 17, 3pm", "Raptor
 var dragonsHeightAverage = 0.0
 var sharksHeightAverage = 0.0
 var raptorsHeightAverage = 0.0
-
-
-// This is the max number of experianced players per team and the max number of players per team
-// TODO: Update this so it's not using hard coded numbers.
-let experiancePlayerMaxCount = 3
-let playerMaxCount = 6
 
 
 // Create each player and add in the information to the dictionary
@@ -71,22 +66,30 @@ let players = [joeSmith,
 
 func addPlayersToTeams(list: NSArray, experianced: Bool) {
     
+    var dragonPlayers = 1
+    var sharkPlayers = 1
+    var raptorPlayers = 1
+    
+    
     for player in players {
     
         if experianced == true && player["experiance"] == true {
-            if teamDragons.count < experiancePlayerMaxCount {
+            if teamDragons.count < sharkPlayers && teamDragons.count < raptorPlayers {
                 teamDragons.append(player)
-            } else if teamSharks.count < experiancePlayerMaxCount {
+                dragonPlayers += 1
+            } else if teamSharks.count < dragonPlayers && teamSharks.count < raptorPlayers {
                 teamSharks.append(player)
-            } else if teamRaptors.count < experiancePlayerMaxCount {
+                sharkPlayers += 1
+            } else if teamRaptors.count < dragonPlayers && teamRaptors.count < sharkPlayers {
                 teamRaptors.append(player)
+                raptorPlayers += 1
             }
         } else if experianced == false && player["experiance"] == false {
-            if teamDragons.count < playerMaxCount {
+            if teamDragons.count < (players.count / totalTeams.count) {
                 teamDragons.append(player)
-            } else if teamSharks.count < playerMaxCount {
+            } else if teamSharks.count < (players.count / totalTeams.count) {
                 teamSharks.append(player)
-            } else if teamRaptors.count < playerMaxCount {
+            } else if teamRaptors.count < (players.count / totalTeams.count) {
                 teamRaptors.append(player)
             }
         }
